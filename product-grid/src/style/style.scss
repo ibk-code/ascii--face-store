@@ -1,0 +1,137 @@
+$color1: #2370f4;
+$color2: #ffffff;
+$color3: #f8f8f8;
+
+@import url('https://fonts.googleapis.com/css2?family=Raleway&display=swap');
+
+body{
+    font-family: 'Raleway', sans-serif;
+}
+
+.skip{
+    position: relative;
+    z-index: 10000;
+    left: 3rem;
+    color:$color1;
+    transition: 1s easein;
+    text-decoration: none !important;
+    top: -12rem;
+    &:hover{
+        color: $color1;
+    }
+    &:focus{
+        top: 0rem;  
+    }
+}
+
+.pg-light{
+    background: $color2 !important;
+}
+
+.active{
+    color: $color1 !important;
+}
+
+.logo{
+    color: $color1;
+    font-size: 2rem;
+    font-weight: 600;
+}
+
+.pg-mobile__toggle{
+    display: block;
+    position: static;
+}
+
+.cart{
+    position: relative;
+    .cart-ind{
+        position: absolute;
+        background: #dddddd;
+        width: 15px;
+        height: 15px;
+        top: -3px;
+        border-radius: 50px;
+        left: 8px;
+        color: $color2;
+        padding: 0rem 1rem 1.5rem 0.3rem;
+    }
+}
+
+.banner{
+    background: url('../img/smiley-2979107_1920.jpg');
+    width: 100%;
+    height: 500px;
+    background-repeat: no-repeat;
+    background-position: 4% -1%;
+    background-repeat: no-repeat;
+}
+
+.header-content{
+    padding-top: 10rem;
+    font-weight: 600;
+    color: $color2;
+}
+
+.down{
+    height: 30px;
+    animation-name: down;
+    will-change: transform;
+    animation-duration: 0.5s;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+}
+
+.pg-card{
+    width: 15rem;
+    height: 20rem;
+    line-height: 1;
+    margin-left: 2rem;
+    margin-top: 2rem;
+    .ascii-face{
+        background: #f8f8f8;
+        height: 9rem;
+        padding: 3rem 1rem 3rem 1rem;
+        color: $color1;
+        p{
+            transition: all 2s ease;
+        }
+        &:hover {
+            .face{
+                transform: scale(1.1);
+            }
+        }
+    }
+    .pg-card__desc{
+        padding: 2rem;
+    }
+}
+
+.cart-btn{
+    background: #236ff4;
+    color: $color2;
+    &:hover{
+        color: $color2;
+    }
+}
+
+@keyframes down{
+    0%{
+       margin-top: 0px; 
+    }
+    50%{
+        margin-top: 3px;
+    }
+    100%{
+        margin-top: 10px;
+    }
+}
+
+@media screen and (max-width: 800px) {
+    .pg-mobile__toggle{
+        position: fixed;
+        display: flex;
+        right: 14px;
+        top: 12px;
+    }
+}
