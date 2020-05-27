@@ -11,14 +11,14 @@ export function formatDateRelative(pdate) {
     let productDate = new Date(pdate);
     let value;
 
-    if (now > productDate) {
+    if (now.getDate() > productDate.getDate()) {
         value = convertTorelative(pdate)
-        console.log(value);
+        // console.log(value);
     }
 
-    if(now === productDate) {
-        convertTorelativeToday(pdate)
-        console.log(value);
+    if(now.getDate() === productDate.getDate()) {
+        value = convertTorelativeToday(pdate)
+        // console.log(value);
     }
 
     return value;
@@ -55,7 +55,7 @@ function convertTorelativeToday (date) {
 
 
     if(hours >= 1) {
-        return ( hours === 1 ? `${hours} hour ago` : `${hours} hour ago` );
+        return ( hours === 1 ? `${hours} hour ago` : `${hours} hours ago` );
     }else{
         if(minutes > 0) {
             return ( minutes === 1 ? `${minutes} minute ago` : `${minutes} minutes ago`);

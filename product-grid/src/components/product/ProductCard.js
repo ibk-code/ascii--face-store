@@ -1,11 +1,11 @@
 import React from 'react';
 import {centsToDollars, formatDateRelative} from '../../helpers/helpers'
 
-const ProductCard = props => {
+const ProductCard = React.forwardRef((props, ref) => {
 
     return(
         <React.Fragment>
-            <div className="pg-card shadow">
+            <div className="pg-card shadow" ref={ref}>
                 <div className="ascii-face">
                     <p style={{fontSize: props.size+"px"}} className="text-center face font-weight-bold">{props.face}</p>
                 </div>
@@ -20,6 +20,6 @@ const ProductCard = props => {
             </div>
         </React.Fragment>
     )
-}
+})
 
 export default ProductCard;
