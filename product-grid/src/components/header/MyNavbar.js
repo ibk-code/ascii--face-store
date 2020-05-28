@@ -13,10 +13,10 @@ const MyNavbar = props => {
                 <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end">      
                     <Nav activeKey={location.pathname}>
                         <Nav.Link href="/">Home</Nav.Link>
-                        <Nav.Link href="/product">Product</Nav.Link>
-                        <Nav.Link href="/about">About</Nav.Link>
-                        <Nav.Link href="/contact">Contact Us</Nav.Link>
-                        <Nav.Link href="/login">Login/SignUp</Nav.Link>
+                        <Nav.Link href="#">Product</Nav.Link>
+                        <Nav.Link href="#">About</Nav.Link>
+                        <Nav.Link href="#">Contact Us</Nav.Link>
+                        <Nav.Link href="#">Login/SignUp</Nav.Link>
                     </Nav>
                 </Navbar.Collapse>
                 <div className="pg-mobile__toggle">

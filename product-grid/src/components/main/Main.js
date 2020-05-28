@@ -9,9 +9,6 @@ const Main = props => {
         <React.Fragment>
             <main id="main">
                 <div className="container">
-                    <div className="pg-sort">
-                        <SortSection />
-                    </div>
                     <div>
                         <Products />
                     </div>

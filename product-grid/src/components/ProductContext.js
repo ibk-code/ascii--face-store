@@ -1,12 +1,11 @@
 import React, {useState, useEffect, useLayoutEffect,  createContext, useRef} from 'react';
 import IdleTimer from 'react-idle-timer';
 import _ from 'lodash';
-import chunk from 'lodash/chunk'
 
 const ProductContext = createContext();
 
 
-const ProductContextProvider = ({children}) => {
+const ProductContextProvider = (props) => {
     const [products, setProducts] = useState([]);
     const [sort, setSort] = useState('id');
     const [loading, setLoading] = useState(false);
@@ -15,27 +14,18 @@ const ProductContextProvider = ({children}) => {
     const [catalogueEnd, setCatalogueEnd] = useState(false);
     const [emptyreturn, setEmptyReturn] = useState('');
     const [datafetchedOnIdle, setDataFetchedOnIdle] = useState(false);
+    const [advertStatus, setAdvertStatus] = useState(false);
+    const [scrollStatus, setScrollStatus] = useState(false);
 
 
     const idleTimerRef = useRef(null);
 
     const fetchData = (startPage, format) => {
-        const url = `http://localhost:3000/api/products?_page=${startPage}&_limit=20&_sort=${format}`
+        setAdvertStatus(false)
+        const url = `http://localhost:3000/api/products?_page=${startPage}&_limit=15&_sort=${format}`
 
         return fetch(url);
     }
-
-    // const fetchProduct = () => {
-    //     setLoading(true)
-    //     fetchData(setProducts, page, sort)
-    // }
-
-    const sortProduct = (e) => {
-        setSort(e.target.value);
-        setDataOnIdle([])
-        setPage(1)
-    }
-    
 
     const getNextData = async () => {
         // if(emounted){
@@ -63,25 +53,22 @@ const ProductContextProvider = ({children}) => {
                 }catch(e){
                     console.log(e)
                 }
-        // }else{
-        //     return
 
     }
 
     const fetchedWhenIdle = (setloading) => {
         console.log("fetched on idle");
         if(dataOnIdle.length >= 1) {
-            setProducts(prevState => _.uniqBy([...prevState, ...dataOnIdle], 'id'))
-            setDataOnIdle([])
-            setDataFetchedOnIdle(false); 
+                setProducts(prevState => _.uniqBy([...prevState, ...dataOnIdle], 'id'))
+                setDataOnIdle([])
+                setDataFetchedOnIdle(false); 
+            setAdvertStatus(true)
+            setloading(false);
         }else if(emptyreturn === 'Data is empty'){
             setCatalogueEnd(true)
             setDataFetchedOnIdle(false); 
-        }
-        
-        setTimeout(() => {
             setloading(false);
-        }, 1000);
+        }
     }
 
     const activeScrolling = async (setloading) => {
@@ -96,8 +83,10 @@ const ProductContextProvider = ({children}) => {
                     setProducts(prevState => _.uniqBy([...prevState, ...data], 'id')) 
                     setPage(pagefrom)
                     setloading(false)
+                    setAdvertStatus(true)
                 }else{
                    setCatalogueEnd(true) 
+                   setloading(false)
                 }
                 // setEmounted(false);
             }
@@ -114,36 +103,15 @@ const ProductContextProvider = ({children}) => {
             activeScrolling(setloading);
         }
     }
-
-    useEffect(() => {
-        const fetchProd = async () => {
-            try{
-                setLoading(true)
-                const response = await fetchData(page, sort);
-
-                const data = await response.json()
-                console.log(data)
-
-                setProducts(data)
-                setLoading(false)
-            }catch(e){
-                console.log(e)
-                return 'Something went wrong'
-            }
-        }
-
-        fetchProd()
-    }, [sort])
-
-    
+  
     return (
-        <ProductContext.Provider value={{products, sortProduct, sort, loading, addNewDataOnScroll, catalogueEnd}} >
+        <ProductContext.Provider value={{products, setProducts, setLoading, sort, setSort, setPage, loading, addNewDataOnScroll, catalogueEnd, setCatalogueEnd, advertStatus, setAdvertStatus, fetchData, page, setDataOnIdle, scrollStatus, setScrollStatus}} >
             <IdleTimer 
                 ref={idleTimerRef}
                 onIdle={getNextData}
                 timeout={5 * 1000}
             >
-                {children}
+                {props.children}
             </IdleTimer>
         </ProductContext.Provider>
     )

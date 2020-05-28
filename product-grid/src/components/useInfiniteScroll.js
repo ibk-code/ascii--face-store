@@ -12,19 +12,23 @@ const useInfiniteScroll = (callback) => {
         }
     }, [loadMoreFetching]);
   
-    const handleScroll = (elem) => {
-        if (elem !== undefined || null) {
+    const handleScroll = (scroll, catalogue) => {
+        if (scroll) {
             // let lastCard = elem;
 
             let lastCardOffset = document.body.offsetHeight;
 
             let pageOffset = window.innerHeight + window.scrollY;
 
-            let bottomSet = 5
-
             if (pageOffset >= lastCardOffset){
-                // console.log("Hello World")
-                setLoadMoreFetching(true);
+                if (document.getElementsByClassName('pg-card')) {
+                    console.log("This is the problem")
+                    if (!catalogue) {
+                        setLoadMoreFetching(true);  
+                    }else{
+                        setLoadMoreFetching(false);
+                    }
+                }
             }
             else{
                 console.log("hello")

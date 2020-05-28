@@ -8,18 +8,6 @@ import {Link} from 'react-router-dom';
 import useInfiniteScroll from './useInfiniteScroll';
 
 const App = props => {
-  // const [addNewDataOnScroll] = useContext(ProductContext);
-
-  // const [loadMoreFetching, setLoadMoreFetching] = useInfiniteScroll(fetchMoreListItems)
-
-  // const fetchMoreListItems = () => {
-  //   setTimeout(() => {
-  //     addNewDataOnScroll();
-  //     setLoadMoreFetching(false);
-  //   }, 2000);
-  // }
-
-
   useEffect(() => {
     AOS.init({
       once:true
