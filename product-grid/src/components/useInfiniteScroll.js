@@ -6,15 +6,12 @@ const useInfiniteScroll = (callback) => {
   
     useEffect(() => {
         if (loadMoreFetching) {
-            console.log('called back')
             callback(); 
-            console.log("Got data") 
         }
     }, [loadMoreFetching]);
   
     const handleScroll = (scroll, catalogue) => {
         if (scroll) {
-            // let lastCard = elem;
 
             let lastCardOffset = document.body.offsetHeight;
 
@@ -22,7 +19,6 @@ const useInfiniteScroll = (callback) => {
 
             if (pageOffset >= lastCardOffset){
                 if (document.getElementsByClassName('pg-card')) {
-                    console.log("This is the problem")
                     if (!catalogue) {
                         setLoadMoreFetching(true);  
                     }else{
@@ -31,12 +27,12 @@ const useInfiniteScroll = (callback) => {
                 }
             }
             else{
-                console.log("hello")
+                return;
             }
         }
     }
   
-    return [loadMoreFetching, setLoadMoreFetching, productLoaded, setproductLoaded, handleScroll];
+    return {loadMoreFetching, setLoadMoreFetching, productLoaded, setproductLoaded, handleScroll};
   };
   
   export default useInfiniteScroll;

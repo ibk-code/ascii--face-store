@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useLayoutEffect,  createContext, useRef} from 'react';
+import React, {useState, createContext, useRef} from 'react';
 import IdleTimer from 'react-idle-timer';
 import _ from 'lodash';
 
@@ -20,6 +20,7 @@ const ProductContextProvider = (props) => {
 
     const idleTimerRef = useRef(null);
 
+    //fetch product from api
     const fetchData = (startPage, format) => {
         setAdvertStatus(false)
         const url = `http://localhost:3000/api/products?_page=${startPage}&_limit=15&_sort=${format}`
@@ -27,13 +28,12 @@ const ProductContextProvider = (props) => {
         return fetch(url);
     }
 
+    //function to fetch data when user is idle
     const getNextData = async () => {
-        // if(emounted){
-            console.log("yay i am now idle")
+            console.log("i am now idle")
                 try{
                     if (!catalogueEnd) {
-                        if (dataOnIdle.length < 1) {
-                            console.log("fetching");     
+                        if (dataOnIdle.length < 1) {     
                             let pagefrom = page + 1, sorted = sort;
                             let response = await fetchData(pagefrom, sorted)
                             
@@ -56,8 +56,8 @@ const ProductContextProvider = (props) => {
 
     }
 
+    //function to run if next data as been fetched when user is idle
     const fetchedWhenIdle = (setloading) => {
-        console.log("fetched on idle");
         if(dataOnIdle.length >= 1) {
                 setProducts(prevState => _.uniqBy([...prevState, ...dataOnIdle], 'id'))
                 setDataOnIdle([])
@@ -71,8 +71,8 @@ const ProductContextProvider = (props) => {
         }
     }
 
+    //function to run if next data as fetch when user is actively scrolling
     const activeScrolling = async (setloading) => {
-        console.log("fetched on scroll");
         try{
             if (!catalogueEnd) {
                 let pagefrom = page + 1, sorted = sort;
@@ -88,15 +88,14 @@ const ProductContextProvider = (props) => {
                    setCatalogueEnd(true) 
                    setloading(false)
                 }
-                // setEmounted(false);
             }
         }catch(e){
             console.log(e)
         }
     }
 
+    //function onscroll when user reach end of page
     const addNewDataOnScroll = (setloading) => {
-        console.log("YOU SCROLLED TO WHERE I WANT");
         if (datafetchedOnIdle === true) {
             fetchedWhenIdle(setloading);
         }else{
@@ -105,7 +104,7 @@ const ProductContextProvider = (props) => {
     }
   
     return (
-        <ProductContext.Provider value={{products, setProducts, setLoading, sort, setSort, setPage, loading, addNewDataOnScroll, catalogueEnd, setCatalogueEnd, advertStatus, setAdvertStatus, fetchData, page, setDataOnIdle, scrollStatus, setScrollStatus}} >
+        <ProductContext.Provider value={{products, setProducts, setLoading, sort, setSort, setPage, loading, addNewDataOnScroll, catalogueEnd, setCatalogueEnd, advertStatus, setAdvertStatus, fetchData, page, setDataOnIdle, scrollStatus, setScrollStatus, datafetchedOnIdle, setDataFetchedOnIdle}} >
             <IdleTimer 
                 ref={idleTimerRef}
                 onIdle={getNextData}

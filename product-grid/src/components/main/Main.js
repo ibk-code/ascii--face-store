@@ -1,5 +1,4 @@
 import React from 'react';
-import SortSection from './SortSection';
 import Products from '../product/Products'
 
 const Main = props => {

@@ -3,7 +3,7 @@
 export function centsToDollars (cent) {
     let converted = (cent/100).toFixed(2);
 
-    return `\$${converted}`
+    return `$${converted}`
 }
 
 export function formatDateRelative(pdate) {
@@ -48,7 +48,6 @@ function convertTorelative (date) {
 function convertTorelativeToday (date) {
     let now = new Date();
     let apiDate = new Date(date);
-    let day = now.getDate() - apiDate.getDate();
     let hours = now.getHours() - apiDate.getHours();
     let minutes = now.getHours() - apiDate.getHours();
     let seconds = now.getHours() - apiDate.getHours();
